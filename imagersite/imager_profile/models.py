@@ -4,7 +4,7 @@ from django.db import models
 
 
 class ImagerProfile(models.Model):
-    """Photographer prifle model."""
+    """Photographer profile model."""
 
     CAMERA_CHOICES = (('FL', 'Film'),
                       ('DG', 'Digital'),
@@ -31,15 +31,15 @@ class ImagerProfile(models.Model):
                        ('AV', 'Advertising'),
                        ('TV', 'Travel'))
     location = models.CharField(max_length=180, blank=True, null=True)
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, related_name='profile')
     website = models.URLField()
     fee = models.DecimalField(max_digits=10, decimal_places=2,
                               blank=True, null=True)
     phone = models.CharField(max_length=12)
     bio = models.TextField(max_length=500)
-    camera = models.CharField(choices=CAMERA_CHOICES, max_length=3)
-    photo_style = models.CharField(choices=STYLE_CHOICES, max_length=3)
-    sevice = models.CharField(choices=SERVICE_CHOICES, max_length=3)
+    camera = models.CharField(choices=CAMERA_CHOICES, max_length=2)
+    photo_style = models.CharField(choices=STYLE_CHOICES, max_length=2)
+    service = models.CharField(choices=SERVICE_CHOICES, max_length=2)
 
     def __str__(self):
         """Print function displays username."""
@@ -49,6 +49,7 @@ class ImagerProfile(models.Model):
         """Return returns username."""
         return self.user.username
 
+    @property
     def is_active(self):
         """Return if user is active."""
         return self.user.is_active
