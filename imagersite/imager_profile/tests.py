@@ -48,10 +48,10 @@ class ProfileTestCase(TestCase):
         """Test setUp creates 30 users."""
         self.assertEqual(User.objects.count(), 31)
 
-    def test_first_user_is_johnny_zero(self):
-        """Test the first username is Johnny0."""
+    def test_user_is_a_johnny(self):
+        """Test the first user is a Johnny."""
         one_user = User.objects.first()
-        self.assertEqual(one_user.username, 'Johnny0')
+        self.assertTrue(one_user.username.startswith('Johnny'))
 
     def test_user_has_location_via_profile(self):
         """Test user has a location."""
@@ -87,3 +87,7 @@ class ProfileTestCase(TestCase):
         """Test is active property returns if user is active."""
         one_user = User.objects.last()
         self.assertTrue(one_user.profile.is_active)
+
+    def test_active_manager_works(self):
+        """Test is active manager_works."""
+        self.assertEqual(ImagerProfile.active.count(), 31)

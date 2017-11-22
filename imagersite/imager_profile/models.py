@@ -3,8 +3,19 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
+class ActiveManager(models.Manager):
+    """Active user subclass."""
+
+    def get_queryset(self):
+        """Set query set for subclass."""
+        return super(ActiveManager, self).get_queryset().filter(user__is_active=True)
+
+
 class ImagerProfile(models.Model):
     """Photographer profile model."""
+
+    objects = models.Manager()
+    active = ActiveManager()
 
     CAMERA_CHOICES = (('FL', 'Film'),
                       ('DG', 'Digital'),
