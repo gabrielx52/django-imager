@@ -91,3 +91,8 @@ class ProfileTestCase(TestCase):
     def test_active_manager_works(self):
         """Test is active manager_works."""
         self.assertEqual(ImagerProfile.active.count(), 31)
+
+    def test_str_attr_displays_username(self):
+        """Test that username is displayed when using str attr."""
+        one_user = User.objects.last()
+        self.assertEqual(one_user.__str__(), 'Jalen')
