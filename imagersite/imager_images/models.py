@@ -9,7 +9,7 @@ class Photo(models.Model):
     PUBLISHED = (('PRVT', 'private'),
                  ('SHRD', 'shared'),
                  ('PBLC', 'public'))
-    image = models.ImageField()
+    image = models.ImageField(upload_to='images')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=180)
     description = models.CharField(max_length=500, blank=True, null=True)
@@ -29,7 +29,7 @@ class Album(models.Model):
     photo = models.ManyToManyField(Photo, related_name='album')
     title = models.CharField(max_length=180)
     description = models.CharField(max_length=500, blank=True, null=True)
-    cover = models.ImageField()
+    cover = models.ImageField(upload_to='images')
     date_created = models.DateField(editable=False, auto_now_add=True)
     date_modified = models.DateField(auto_now=True)
     date_published = models.DateField()
