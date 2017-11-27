@@ -26,17 +26,17 @@ class ProfileTestCase(TestCase):
         for i in range(30):
             self.user = UserFactory.create()
             self.user.save()
-            profile = ImagerProfile(location='Anywhere but here')
-            profile.user = self.user
+            profile = self.user.profile
+            profile.location = 'Anywhere but here'
             profile.save()
         unique_user = User(username='Jalen',
                            password='F@kep@ssw0rd')
         unique_user.save()
-        profile = ImagerProfile(location='Seattle',
-                                user=unique_user,
-                                camera='FL',
-                                service='PT',
-                                photo_style='NT')
+        profile = unique_user.profile
+        profile.location = 'Seattle'
+        profile.camera = 'FL'
+        profile.service = 'PT'
+        profile.photo_style = 'NT'
         profile.save()
 
     def test_user_can_point_to_profile(self):
