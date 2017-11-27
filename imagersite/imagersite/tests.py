@@ -28,3 +28,9 @@ class ViewTestCase(TestCase):
         c = Client()
         response = c.get('/accounts/register/')
         self.assertEqual(response.status_code, 200)
+
+    def test_home_page_has_h1(self):
+        """Test home page has h1 div with correct text."""
+        c = Client()
+        response = c.get('/')
+        self.assertContains(response, b'Djimager home page.')
