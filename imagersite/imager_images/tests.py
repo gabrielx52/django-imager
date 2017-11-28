@@ -65,6 +65,6 @@ class PhotoTestCase(TestCase):
 
 
     def test_album_title_is_the_album(self):
-        """Thest that the album title is The Albumn."""
+        """Thest that the album title is The Album."""
         one_album = Album.objects.get()
         self.assertEqual(one_album.title, 'The Album')
