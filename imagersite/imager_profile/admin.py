@@ -1,3 +1,7 @@
+"""Registered models."""
 from django.contrib import admin
 
-# Register your models here.
+from imager_profile.models import ImagerProfile
+
+
+admin.site.register(ImagerProfile)
