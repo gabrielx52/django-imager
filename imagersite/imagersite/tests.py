@@ -2,6 +2,7 @@
 from bs4 import BeautifulSoup as Soup
 
 from django.contrib.auth.models import User
+from django.core import mail
 from django.test import Client, TestCase
 from django.urls import reverse_lazy
 
@@ -13,7 +14,7 @@ class ViewTestCase(TestCase):
         """Client setup."""
         self.c = Client()
 
-        self.bad_user = {'username': 'Andrew',
+        self.bad_user = {'username': 'Crow',
                          'password': 'f@kenew5'}
 
         user = User(username='Jane')
@@ -21,6 +22,11 @@ class ViewTestCase(TestCase):
         user.save()
         self.good_user = {'username': 'Jane',
                           'password': 'p@ssw0rd'}
+
+        self.reg_data = {'username': 'Joel',
+                         'password1': 'Thep@ssw0rd',
+                         'password2': 'Thep@ssw0rd',
+                         'email': 'Joel@juno.com'}
 
     def test_home_view_status_code_200(self):
         """Test main view has 200 status."""
@@ -94,6 +100,15 @@ class ViewTestCase(TestCase):
                                follow=True)
         self.assertContains(response, 'Hello Jane', status_code=200)
 
+    def test_login_logout_home_display_has_no_name(self):
+        """Test that home will not display name after login and logout."""
+        response = self.c.post(reverse_lazy('login'),
+                               self.good_user,
+                               follow=True)
+        self.assertContains(response, 'Hello Jane', status_code=200)
+        response = self.c.get(reverse_lazy('logout'), follow=True)
+        self.assertNotContains(response, 'Hello Jane', status_code=200)
+
     def test_logout_view_status_code_302(self):
         """Test logout view has 302 status."""
         response = self.c.get(reverse_lazy('logout'))
@@ -103,3 +118,43 @@ class ViewTestCase(TestCase):
         """Test register view has 200 status."""
         response = self.c.get(reverse_lazy('registration_register'))
         self.assertEqual(response.status_code, 200)
+
+    def test_register_status_code_302_after_registration(self):
+        """Test register has 302 code after registration."""
+        response = self.c.post(reverse_lazy('registration_register'),
+                               self.reg_data)
+        self.assertEqual(response.status_code, 302)
+
+    def test_register_redirects_to_registration_complete(self):
+        """Test register redirects to registration complete page."""
+        response = self.c.post(reverse_lazy('registration_register'),
+                               self.reg_data,
+                               follow=True)
+        self.assertTemplateUsed(response,
+                                'registration/registration_complete.html')
+
+    def test_register_sends_email(self):
+        """Test register sends email."""
+        self.c.post(reverse_lazy('registration_register'),
+                    self.reg_data,
+                    follow=True)
+        self.assertEqual(len(mail.outbox), 1)
+
+    def test_register_email_has_subject(self):
+        """Test register email has correct subject."""
+        self.c.post(reverse_lazy('registration_register'),
+                    self.reg_data,
+                    follow=True)
+        email = mail.outbox[0]
+        self.assertEqual(email.subject, 'Djimager registration email.')
+
+    def test_register_email_link_acctivates_account(self):
+        """Test register email has correct subject."""
+        self.c.post(reverse_lazy('registration_register'),
+                    self.reg_data,
+                    follow=True)
+        content = mail.outbox[0].message().get_payload()
+        link = content.split('\n\n')[2]
+        self.c.get(link)
+        user = User.objects.get(username='Joel')
+        self.assertTrue(user.is_active)
