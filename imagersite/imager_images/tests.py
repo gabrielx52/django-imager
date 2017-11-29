@@ -28,21 +28,15 @@ class PhotoTestCase(TestCase):
         jimbo = User(username='Jimbo',
                      password='p@ssw0rd')
         jimbo.save()
-        j_profile = jimbo.profile
-        j_profile.location = "Buffalo"
-        j_profile.save()
-        album = Album(user=j_profile, title='The Album')
+        jimbo.profile.location = "Buffalo"
+        jimbo.profile.save()
+        album = Album(user=jimbo.profile, title='The Album')
         album.save()
         for i in range(30):
-            photo = Photo(user=j_profile, title=f'Pic{i}')
-            album.album = photo
+            photo = Photo(user=jimbo.profile, title=f'Pic{i}')
             photo.save()
-
-    
-    def test_user_is_jimbo(self):
-        """Test the username is Jimbo."""
-        one_user = User.objects.first()
-        self.assertEqual(one_user.username, 'Jimbo')
+            album.photo.add(photo)
+        self.album = album
 
 
     def test_user_has_30_photos(self):
@@ -59,12 +53,18 @@ class PhotoTestCase(TestCase):
 
 
     def test_album_created(self):
-        """Thest that the album is created."""
+        """Test that the album is created."""
         one_album = Album.objects.get()
         self.assertIsNotNone(one_album)
 
 
     def test_album_title_is_the_album(self):
-        """Thest that the album title is The Album."""
+        """Test that the album title is The Album."""
         one_album = Album.objects.get()
         self.assertEqual(one_album.title, 'The Album')
+
+
+    def test_album_has_30_photos(self):
+        """Test album has 30 photos."""
+        one_album = Album.objects.get()
+        self.assertEqual(one_album.photo.count(), 30)

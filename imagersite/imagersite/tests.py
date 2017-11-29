@@ -14,8 +14,8 @@ class ViewTestCase(TestCase):
         """Client setup."""
         self.c = Client()
 
-        self.bad_user = {'username': 'Crow',
-                         'password': 'f@kenew5'}
+        self.bad_user = {'username': 'Allan',
+                         'password': 'm@ttshouldquit'}
 
         user = User(username='Jane')
         user.set_password('p@ssw0rd')
