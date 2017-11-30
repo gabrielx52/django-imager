@@ -2,6 +2,17 @@
 {% extends "imagersite/base.html" %}
 {% block content %}
 <h1></h1>
-<img id="home_image" src="http://www.trbimg.com/img-5930469a/turbine/la-sp-mr-met-middle-finger-incident-20170531" alt="Mr. Met">
-    
+<div class="card" id="home_card">
+  <div class="card-header"><h3 class="inline">{{ photo.title }}</h3><h5 class="inline text-muted"> by <a class="card-link" href="{% url 'user_profile' username=photo.user.user.username %}">{{ photo.user.user.username }}</a></h5></div>
+
+  <img id="home_image" src="{{ photo.image.url }}" alt="{{ photo.title }}"/>
+  <div class="card-body">
+    <p class="card-text text-muted"><em>{{ photo.description }}</em></p>
+
+  </div>
+  <div class="card-footer text-muted">
+    {{ photo.date_published }}
+  </div>
+</div>
+
 {% endblock content %}

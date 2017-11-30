@@ -6,7 +6,7 @@
 
 #home_image {
     width: 50%;
-    margin: 0 25%;
+    margin: 1em 25%;
 }
 
 #bio_left {
@@ -22,5 +22,14 @@
 }
 
 #profile_header {
-    margin: 1em 10%;
+    margin-left: 15%;
+}
+
+#home_card {
+    width: 60%;
+    margin: 5% 20%;
+}
+
+.inline {
+    display: inline;
 }

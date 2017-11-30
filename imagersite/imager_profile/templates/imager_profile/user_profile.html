@@ -1,9 +1,10 @@
 {% extends "imagersite/base.html" %}
 {% block content %}
 
-<h2 id="profile_header"> {{ user.username }} </h2>
+{# <h2> {{ user.username }} </h2> #}
+<br>
     <ul id="bio_left" class="list-group">
-        {# <li class="list-group-item">Username: {{ request.user.username }}</li> #}
+        <li class="list-group-item">Username: {{ user.username }}</li>
         <li class="list-group-item">Email: {{ user.email }}</li>
         <li class="list-group-item">Location: {{ user.profile.location }}</li>
         <li class="list-group-item">Website: <a href="{{ user.profile.website }}">
@@ -22,6 +23,8 @@
         <img style="width: 100%; display: block;" src="http://www.trbimg.com/img-5930469a/turbine/la-sp-mr-met-middle-finger-incident-20170531" alt="Card image">
         <div class="card-body">
             <p class="card-text">Bio: {{ user.profile.bio }}</p>
+            <p class="card-text">Album count: {{ user.profile.album.count }}</p>
+            <p class="card-text">Photo count: {{ user.profile.photo.count }}</p>
         </div>
         <div class="card-footer text-muted">
         </div>
