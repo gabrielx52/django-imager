@@ -1,0 +1,34 @@
+{% extends "imagersite/base.html" %}
+{% block content %}
+{% if request.user.is_authenticated %}
+    <h2 id="profile_header">Profile page
+    <button type="button" class="btn btn-warning">Update</button></h2>
+    <ul id="bio_left" class="list-group">
+        <li class="list-group-item">Username: {{ request.user.username }}</li>
+        <li class="list-group-item">Email: {{ request.user.email }}</li>
+        <li class="list-group-item">Location: {{ request.user.profile.location }}</li>
+        <li class="list-group-item">Website: <a href="{{ request.user.profile.website }}">
+                                                 {{ request.user.profile.website }}
+                                             </a>
+        </li>
+        <li class="list-group-item">Phone: {{ request.user.profile.phone }}</li>
+        <li class="list-group-item">Camera: {{ request.user.profile.get_camera_display }}</li>
+        <li class="list-group-item">Photo Style: {{ request.user.profile.get_photo_style_display }}</li>
+        <li class="list-group-item">Service: {{ request.user.profile.get_service_display }}</li>
+        <li class="list-group-item">Fee: {{ request.user.profile.fee }}</li>
+
+    </ul>
+    <div id="bio_right" class="card">
+        <h3 class="card-header"></h3>
+        <img style="width: 100%; display: block;" src="http://www.trbimg.com/img-5930469a/turbine/la-sp-mr-met-middle-finger-incident-20170531" alt="Card image">
+        <div class="card-body">
+            <p class="card-text">Bio: {{ request.user.profile.bio }}</p>
+        </div>
+        <div class="card-footer text-muted">
+        </div>
+    </div>
+
+
+{% endif %}
+    
+{% endblock content %}

@@ -1,0 +1,26 @@
+#logged_in {
+    position: absolute;
+    right: 1em;
+    bottom: 1em; 
+}
+
+#home_image {
+    width: 50%;
+    margin: 0 25%;
+}
+
+#bio_left {
+    display: inline-block;
+    margin-left: 15%;
+    width: 20%;
+}
+
+#bio_right {
+    display: inline-block;
+    width: 40%;
+    margin-left: 15%;
+}
+
+#profile_header {
+    margin: 1em 10%;
+}
