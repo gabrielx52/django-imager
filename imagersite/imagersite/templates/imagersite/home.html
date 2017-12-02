@@ -1,18 +1,38 @@
 
 {% extends "imagersite/base.html" %}
 {% block content %}
+
+
 <h1></h1>
 <div class="card" id="home_card">
-  <div class="card-header"><h3 class="inline">{{ photo.title }}</h3><h5 class="inline text-muted"> by <a class="card-link" href="{% url 'user_profile' username=photo.user.user.username %}">{{ photo.user.user.username }}</a></h5></div>
-
-  <img id="home_image" src="{{ photo.image.url }}" alt="{{ photo.title }}"/>
-  <div class="card-body">
-    <p class="card-text text-muted"><em>{{ photo.description }}</em></p>
-
-  </div>
-  <div class="card-footer text-muted">
-    {{ photo.date_published }}
-  </div>
+    {% if photo %}
+    <div class="card-header">
+        <h3 class="inline">{{ photo.title }}</h3><h5 class="inline text-muted"> by <a class="card-link" href="{% url 'user_profile' username=photo.user.user.username %}">{{ photo.user.user.username }}</a></h5>
+    </div>
+    <a href="{% url 'photo' pk=photo.pk %}" class="d-block mb-4 h-100">
+        <img id="home_image" src="{{ photo.image.url }}" alt="{{ photo.title }}"/>
+    </a>
+    <div class="card-body">
+        <p class="card-text text-muted"><em>{{ photo.description }}</em></p>
+    </div>
+    <div class="card-footer text-muted">
+        {{ photo.date_published }}
+    </div>
+    {% endif %}
+    {% if not photo %}
+    <div class="card-header">
+        <h3 class="inline">Title</h3><h5 class="inline text-muted"> by User</a></h5>
+    </div>
+    <a href="#" class="d-block mb-4 h-100">
+        <img id="home_image" src="https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/4/4/0/cdd8-a2ff-42b2-8096-e3690f5372c7.jpg" alt="text"/>
+    </a>
+    <div class="card-body">
+        <p class="card-text text-muted"><em>description</em></p>
+    </div>
+    <div class="card-footer text-muted">
+        date published
+    </div>
+    {% endif %}
 </div>
 
 {% endblock content %}

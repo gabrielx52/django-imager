@@ -33,3 +33,7 @@
 .inline {
     display: inline;
 }
+
+.photo_detail {
+    margin: 2em 0;
+}

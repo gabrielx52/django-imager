@@ -42,13 +42,13 @@ class PhotoTestCase(TestCase):
     def test_user_has_30_photos(self):
         """Test that user Jimbo has 30 photo."""
         one_user = User.objects.first()
-        self.assertEqual(one_user.profile.photo_set.count(), 30)
+        self.assertEqual(one_user.profile.photo.count(), 30)
 
 
     def test_first_photo_title_is_pic0(self):
         """Test that user Jimbo has 30 photo."""
         one_user = User.objects.first()
-        pic = one_user.profile.photo_set.first()
+        pic = one_user.profile.photo.first()
         self.assertEqual(pic.title, 'Pic0')
 
 

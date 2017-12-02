@@ -1,21 +1,20 @@
 """Django profile app views."""
 from django.contrib.auth.models import User
-
-from django.shortcuts import render
+from django.views.generic import TemplateView
 
 from imager_images.models import Photo
 
 
-def profile_view(request, username=None):
-    """View for profile."""
-    return render(request, 'imager_profile/profile.html')
+class UserView(TemplateView):
+    """User view class based view."""
 
 
-def user_profile_view(request, username=None):
-    """View for profile."""
-    user = User.objects.get(username=username)
-    photo = Photo.objects.order_by('?').first()
-    # import pdb; pdb.set_trace()
-    return render(request, 'imager_profile/user_profile.html',
-                  context={'user': user,
-                           'photo': photo})
+class ProfileView(TemplateView):
+    """Profile view class based view."""
+
+    def get_context_data(self, username=None):
+        """Get context data for view."""
+        user = User.objects.get(username=username)
+        photo = Photo.objects.order_by('?').first()
+        return {'photo': photo,
+                'user': user}

@@ -1,0 +1,33 @@
+{% extends "imagersite/base.html" %}
+{% block content %}
+{% if request.user.is_authenticated %}
+<div class="container">
+
+      <h1 class="my-4 text-center text-lg-left">Thumbnail Gallery</h1>
+
+      <div class="row text-center text-lg-left">
+        {% for album in request.user.profile.album.all%}
+        <div class="col-lg-3 col-md-4 col-xs-6">
+          <a href="{% url 'album' pk=album.pk %}" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="{{ album.cover.url }}" alt="">
+          </a>
+        </div>
+        {% endfor %}
+        
+        {% for photo in request.user.profile.photo.all%}
+        <div class="col-lg-3 col-md-4 col-xs-6">
+          <a href="{% url 'photo' pk=photo.pk %}" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="{{ photo.image.url }}" alt="">
+          </a>
+        </div>
+        {% endfor %}
+
+      </div>
+
+    </div>
+{% endif %}
+{% if not request.user.is_authenticated %}
+<h1>Norp</h1>
+{% endif %}
+    
+{% endblock content %}

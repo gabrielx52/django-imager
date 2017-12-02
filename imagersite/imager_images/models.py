@@ -34,6 +34,10 @@ class Photo(ImageBaseClass):
     image = models.ImageField(upload_to='images')
     date_uploaded = models.DateField(editable=False, auto_now_add=True)
 
+    def __str__(self):
+        """Print function displays username."""
+        return self.title
+
 
 class Album(ImageBaseClass):
     """Album model."""
@@ -43,3 +47,7 @@ class Album(ImageBaseClass):
     photo = models.ManyToManyField(Photo, related_name='album')
     cover = models.ImageField(upload_to='images')
     date_created = models.DateField(editable=False, auto_now_add=True)
+
+    def __str__(self):
+        """Print function displays username."""
+        return self.title
