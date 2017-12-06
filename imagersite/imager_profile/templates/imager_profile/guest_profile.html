@@ -1,0 +1,35 @@
+{% extends "imagersite/base.html" %}
+{% block content %}
+
+
+<br>
+    <ul id="bio_left" class="list-group">
+        <li class="list-group-item">Username: {{ user.username }}</li>
+        <li class="list-group-item">Email: {{ user.email }}</li>
+        <li class="list-group-item">Location: {{ user.profile.location }}</li>
+        <li class="list-group-item">Website: <a href="{{ user.profile.website }}">
+                                                 {{ user.profile.website }}
+                                             </a>
+        </li>
+        <li class="list-group-item">Phone: {{ user.profile.phone }}</li>
+        <li class="list-group-item">Camera: {{ user.profile.get_camera_display }}</li>
+        <li class="list-group-item">Photo Style: {{ user.profile.get_photo_style_display }}</li>
+        <li class="list-group-item">Service: {{ user.profile.get_service_display }}</li>
+        <li class="list-group-item">Fee: {{ user.profile.fee }}</li>
+
+    </ul>
+    <div id="bio_right" class="card">
+        <h3 class="card-header"></h3>
+        <img style="width: 100%; display: block;" src="http://www.trbimg.com/img-5930469a/turbine/la-sp-mr-met-middle-finger-incident-20170531" alt="Card image">
+        <div class="card-body">
+            <p class="card-text">Bio: {{ user.profile.bio }}</p>
+            <p class="card-text">Album count: {{ user.profile.album.count }}</p>
+            <p class="card-text">Photo count: {{ user.profile.photo.count }}</p>
+            <a href="{% url 'library' username=user.username %}"><button type="button" class="btn btn-success">Albums</button></a>
+        </div>
+        <div class="card-footer text-muted">
+        </div>
+    </div>
+
+
+{% endblock %}

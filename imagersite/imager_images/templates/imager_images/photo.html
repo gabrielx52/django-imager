@@ -1,0 +1,24 @@
+{% extends "imagersite/base.html" %}
+{% block content %}
+<div class="container">
+
+<div class="card photo_detail">
+    <div class="card-header">
+        <h3 class="inline">{{ photo.title }}</h3><h5 class="inline text-muted"> by <a class="card-link" href="{% url 'user_profile' username=photo.user.user.username %}">{{ photo.user.user.username }}</a></h5>
+    </div>
+    <div class="card-body">
+    </div>
+    <img id="home_image" src="{{ photo.image.url }}" alt="Card image">
+    <div class="card-body">
+        <p class="card-text text-muted"><em>{{ photo.description }}</em></p>
+    </div>
+    {% if photo.album %}
+        {{ photo.album.get.title }}
+    {% endif %}
+    <div class="card-footer text-muted">
+        {{ photo.date_published }}
+    </div>
+</div>
+
+    
+{% endblock content %}

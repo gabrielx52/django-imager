@@ -30,13 +30,13 @@ class ViewTestCase(TestCase):
 
     def test_home_view_status_code_200(self):
         """Test main view has 200 status."""
-        response = self.c.get(reverse_lazy('home'))
+        response = self.c.get('/')
         self.assertEqual(response.status_code, 200)
 
     def test_home_page_has_h1(self):
         """Test home page has h1 div with correct text."""
         response = self.c.get(reverse_lazy('home'))
-        self.assertContains(response, b'Djimager home page.')
+        self.assertContains(response, b'Djimager')
 
     def test_home_view_template_is_home(self):
         """Test home view template is home.html."""
@@ -91,23 +91,26 @@ class ViewTestCase(TestCase):
         response = self.c.post(reverse_lazy('login'),
                                self.good_user,
                                follow=True)
-        self.assertTemplateUsed(response, 'imagersite/home.html')
+        self.assertTemplateUsed(response, 'imager_profile/profile.html')
 
     def test_login_with_valid_user_home_displays_name(self):
         """Test that successful login will redirect to home."""
         response = self.c.post(reverse_lazy('login'),
                                self.good_user,
                                follow=True)
-        self.assertContains(response, 'Hello Jane', status_code=200)
+        self.assertContains(response, 'Jane is currently logged in',
+                            status_code=200)
 
     def test_login_logout_home_display_has_no_name(self):
         """Test that home will not display name after login and logout."""
         response = self.c.post(reverse_lazy('login'),
                                self.good_user,
                                follow=True)
-        self.assertContains(response, 'Hello Jane', status_code=200)
+        self.assertContains(response, 'Jane is currently logged in',
+                            status_code=200)
         response = self.c.get(reverse_lazy('logout'), follow=True)
-        self.assertNotContains(response, 'Hello Jane', status_code=200)
+        self.assertNotContains(response, 'Jane is currently logged in',
+                               status_code=200)
 
     def test_logout_view_status_code_302(self):
         """Test logout view has 302 status."""

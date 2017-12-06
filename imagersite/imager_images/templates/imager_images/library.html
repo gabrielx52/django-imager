@@ -1,0 +1,37 @@
+{% extends "imagersite/base.html" %}
+{% block content %}
+<div class="container">
+
+      <h1 class="my-4 text-center text-lg-left">Thumbnail Gallery</h1>
+
+        {% if user.profile.album.count != 0 %}
+            <div><h3 class="my-4 text-center text-lg-left">Albums</h3></div>
+        <div class="row text-center text-lg-left">
+        {% for album in user.profile.album.all %}
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="{% url 'album' pk=album.pk %}" class="d-block mb-4 h-100">
+                    {% if album.cover.url != None %}
+                    <img class="img-fluid img-thumbnail" src="{{ album.cover.url }}" alt="">
+                    }
+                    {% endif %}
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if user.profile.photo.count != 0 %}
+            <div><h3 class="my-4 text-center text-lg-left">Photos</h3></div>
+        <div class="row text-center text-lg-left">
+        {% for photo in user.profile.photo.all %}
+        <div class="col-lg-3 col-md-4 col-xs-6">
+            <a href="{% url 'photo' pk=photo.pk %}" class="d-block mb-4 h-100">
+                <img class="img-fluid img-thumbnail" src="{{ photo.image.url }}" alt="">
+            </a>
+        </div>
+        {% endfor %}
+        </div>
+        {% endif %}
+
+</div>    
+{% endblock content %}

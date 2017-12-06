@@ -13,15 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import include, url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
 
-from imagersite.views import home_view
+from imagersite.views import HomeView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', home_view, name='home'),
+    url(r'^$',
+        HomeView.as_view(template_name='imagersite/home.html'),
+        name='home'),
     url(r'^login/$',
         login,
         {'template_name': 'imagersite/login.html'},
@@ -31,4 +35,11 @@ urlpatterns = [
         {'next_page': '/'},
         name="logout"),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
+    url(r'profile/', include('imager_profile.urls')),
+    url(r'images/', include('imager_images.urls')),
+
 ]
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    )
