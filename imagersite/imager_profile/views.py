@@ -5,11 +5,11 @@ from django.views.generic import TemplateView
 from imager_images.models import Photo
 
 
-class UserView(TemplateView):
+class ProfileView(TemplateView):
     """User view class based view."""
 
 
-class ProfileView(TemplateView):
+class GuestView(TemplateView):
     """Profile view class based view."""
 
     def get_context_data(self, username=None):

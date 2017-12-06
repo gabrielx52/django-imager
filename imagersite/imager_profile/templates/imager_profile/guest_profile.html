@@ -25,6 +25,7 @@
             <p class="card-text">Bio: {{ user.profile.bio }}</p>
             <p class="card-text">Album count: {{ user.profile.album.count }}</p>
             <p class="card-text">Photo count: {{ user.profile.photo.count }}</p>
+            <a href="{% url 'library' username=user.username %}"><button type="button" class="btn btn-success">Albums</button></a>
         </div>
         <div class="card-footer text-muted">
         </div>

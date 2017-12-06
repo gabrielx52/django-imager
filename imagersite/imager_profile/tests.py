@@ -1,6 +1,7 @@
 """Test module for imager profile app."""
 
-from django.test import TestCase
+from django.test import Client, TestCase
+from django.urls import reverse_lazy
 
 import factory
 
@@ -23,6 +24,8 @@ class ProfileTestCase(TestCase):
 
     def setUp(self):
         """Setup."""
+        self.c = Client()
+
         for i in range(30):
             self.user = UserFactory.create()
             self.user.save()
@@ -38,6 +41,7 @@ class ProfileTestCase(TestCase):
         profile.service = 'PT'
         profile.photo_style = 'NT'
         profile.save()
+        self.user = unique_user
 
     def test_user_can_point_to_profile(self):
         """Test user can point to profile."""
@@ -96,3 +100,24 @@ class ProfileTestCase(TestCase):
         """Test that username is displayed when using str attr."""
         one_user = User.objects.last()
         self.assertEqual(one_user.__str__(), 'Jalen')
+
+    def test_profile_view_template_is_profile(self):
+        """Test profile view template is profile.html."""
+        response = self.c.get(reverse_lazy('profile'))
+        self.assertTemplateUsed(response, 'imager_profile/profile.html')
+
+    def test_profile_view_inherits_base_template(self):
+        """Test profile view inherits base.html template."""
+        response = self.c.get(reverse_lazy('profile'))
+        self.assertTemplateUsed(response, 'imagersite/base.html')
+
+    def test_guest_view_template_is_profile(self):
+        """Test guest view template is profile.html."""
+        response = self.c.get('/profile/Jalen/')
+        self.assertTemplateUsed(response, 'imager_profile/guest_profile.html')
+
+    def test_guest_view_inherits_base_template(self):
+        """Test guest view inherits base.html template."""
+        response = self.c.get('/profile/Jalen/')
+        self.assertTemplateUsed(response, 'imagersite/base.html')
+

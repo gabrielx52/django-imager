@@ -45,7 +45,7 @@ class Album(ImageBaseClass):
     user = models.ForeignKey(ImagerProfile, on_delete=models.CASCADE,
                              related_name='album')
     photo = models.ManyToManyField(Photo, related_name='album')
-    cover = models.ImageField(upload_to='images')
+    cover = models.ImageField(upload_to='images', blank=True, null=True)
     date_created = models.DateField(editable=False, auto_now_add=True)
 
     def __str__(self):

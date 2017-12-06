@@ -1,13 +1,13 @@
 """Imager profile app urls."""
 from django.conf.urls import url
 
-from imager_profile.views import ProfileView, UserView
+from imager_profile.views import GuestView, ProfileView
 
 urlpatterns = [
     url(r'^$',
-        UserView.as_view(template_name='imager_profile/profile.html'),
+        ProfileView.as_view(template_name='imager_profile/profile.html'),
         name='profile'),
     url(r'^(?P<username>\w+)/$',
-        ProfileView.as_view(template_name='imager_profile/user_profile.html'),
+        GuestView.as_view(template_name='imager_profile/guest_profile.html'),
         name='user_profile')
 ]

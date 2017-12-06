@@ -4,7 +4,7 @@ from django.conf.urls import url
 from imager_images.views import AlbumView, LibraryView, PhotoView
 
 urlpatterns = [
-    url(r'^library/$',
+    url(r'^library/(?P<username>\w+)/$',
         LibraryView.as_view(template_name='imager_images/library.html'),
         name='library'),
     url(r'^albums/(?P<pk>\d+)/$',
