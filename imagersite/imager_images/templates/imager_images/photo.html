@@ -10,10 +10,19 @@
     </div>
     <img id="home_image" src="{{ photo.image.url }}" alt="Card image">
     <div class="card-body">
+        {% if photo.description != None %}
         <p class="card-text text-muted"><em>{{ photo.description }}</em></p>
+        {% endif %}
     </div>
-    {% if photo.album %}
-        {{ photo.album.get.title }}
+    {% if photo.album.count != 0 %}
+        <ul id='album_list' >
+        <li class="card-text text-muted inline"><em>Album(s): </em></li>
+        {% for al in photo.album.all %}
+        <a href="{% url 'album' pk=al.pk %}">
+            <li class='inline album_li'> {{ al }} </li>
+        </a>
+        {% endfor %}
+        </ul>
     {% endif %}
     <div class="card-footer text-muted">
         {{ photo.date_published }}

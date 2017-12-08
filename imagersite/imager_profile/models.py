@@ -10,7 +10,8 @@ class ActiveManager(models.Manager):
 
     def get_queryset(self):
         """Set query set for subclass."""
-        return super(ActiveManager, self).get_queryset().filter(user__is_active=True)
+        return super(ActiveManager,
+                     self).get_queryset().filter(user__is_active=True)
 
 
 class ImagerProfile(models.Model):

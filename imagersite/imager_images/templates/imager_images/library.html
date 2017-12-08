@@ -2,7 +2,10 @@
 {% block content %}
 <div class="container">
 
-      <h1 class="my-4 text-center text-lg-left">Thumbnail Gallery</h1>
+    <h2>Gallery
+    <a href="{% url 'photo_form' %}"><button type="button" class="btn btn-warning">Add Photo</button></a>
+    <a href="{% url 'album_form' %}"><button type="button" class="btn btn-success">Add Album</button></a>
+    </h2>
 
         {% if user.profile.album.count != 0 %}
             <div><h3 class="my-4 text-center text-lg-left">Albums</h3></div>
@@ -12,7 +15,6 @@
                 <a href="{% url 'album' pk=album.pk %}" class="d-block mb-4 h-100">
                     {% if album.cover.url != None %}
                     <img class="img-fluid img-thumbnail" src="{{ album.cover.url }}" alt="">
-                    }
                     {% endif %}
                 </a>
             </div>

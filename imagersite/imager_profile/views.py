@@ -8,9 +8,13 @@ from imager_images.models import Photo
 class ProfileView(TemplateView):
     """User view class based view."""
 
+    template_name = 'imager_profile/profile.html'
+
 
 class GuestView(TemplateView):
     """Profile view class based view."""
+
+    template_name = 'imager_profile/guest_profile.html'
 
     def get_context_data(self, username=None):
         """Get context data for view."""
