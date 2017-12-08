@@ -4,10 +4,6 @@ from django.conf.urls import url
 from imager_profile.views import GuestView, ProfileView
 
 urlpatterns = [
-    url(r'^$',
-        ProfileView.as_view(template_name='imager_profile/profile.html'),
-        name='profile'),
-    url(r'^(?P<username>\w+)/$',
-        GuestView.as_view(template_name='imager_profile/guest_profile.html'),
-        name='user_profile')
+    url(r'^$', ProfileView.as_view(), name='profile'),
+    url(r'^(?P<username>\w+)/$', GuestView.as_view(), name='user_profile')
 ]

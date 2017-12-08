@@ -1,12 +1,16 @@
 """Test module for imager profile app."""
+import tempfile
+
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile as Sup
 from django.test import Client, TestCase
+from django.core.files import File
 
 import factory
-import tempfile
 
 from imager_images.models import Album, Photo
+from imager_images.forms import NewAlbumForm, NewPhotoForm
+
 
 from imager_profile.models import ImagerProfile, User
 
@@ -30,8 +34,8 @@ class PhotoTestCase(TestCase):
         settings.MEDIA_ROOT = tempfile.mkdtemp()
         self.c = Client()
 
-        jimbo = User(username='Jimbo',
-                     password='p@ssw0rd')
+        jimbo = User(username='Jimbo')
+        jimbo.set_password('p@ssw0rd')
         jimbo.save()
         jimbo.profile.location = "Buffalo"
         jimbo.profile.save()
@@ -80,12 +84,14 @@ class PhotoTestCase(TestCase):
 
     def test_library_view_template_is_library(self):
         """Test library view template is library.html."""
-        response = self.c.get('/images/library/Jimbo/')
+        self.c.login(username='Jimbo', password='p@ssw0rd')
+        response = self.c.get('/images/library/')
         self.assertTemplateUsed(response, 'imager_images/library.html')
 
     def test_library_view_inherits_base_template(self):
         """Test library view inherits base.html template."""
-        response = self.c.get('/images/library/Jimbo/')
+        self.c.login(username='Jimbo', password='p@ssw0rd')
+        response = self.c.get('/images/library/')
         self.assertTemplateUsed(response, 'imagersite/base.html')
 
     def test_photo_view_template_is_photo(self):
@@ -126,5 +132,42 @@ class PhotoTestCase(TestCase):
 
     def test_library_view_status_code_200(self):
         """Test library view has 200 status."""
-        response = self.c.get('/images/library/Jimbo/')
+        self.c.login(username='Jimbo', password='p@ssw0rd')
+        response = self.c.get('/images/library/')
         self.assertEqual(response.status_code, 200)
+
+    def test_add_photo_view_status_code_302_if_not_logged_in(self):
+        """Test add photo view redirects if not logged in."""
+        response = self.c.get('/images/photos/add/')
+        self.assertEqual(response.status_code, 302)
+
+    def test_add_album_view_status_code_302_if_not_logged_in(self):
+        """Test add album view redirects if not logged in."""
+        response = self.c.get('/images/albums/add/')
+        self.assertEqual(response.status_code, 302)
+
+    def test_add_album_view_template_is_album_form(self):
+        """Test add album view template is album_form.html."""
+        self.c.login(username='Jimbo', password='p@ssw0rd')
+        response = self.c.get(f'/images/albums/add/')
+        self.assertTemplateUsed(response, 'imager_images/album_form.html')
+
+    def test_add_photo_view_template_is_photo_form(self):
+        """Test add photo view template is photo_view.html."""
+        self.c.login(username='Jimbo', password='p@ssw0rd')
+        response = self.c.get(f'/images/photos/add/')
+        self.assertTemplateUsed(response, 'imager_images/photo_form.html')
+
+    def test_new_album_form_vaild_data(self):
+        """Test NewAlbumForm with valid data."""
+        photo = [Photo.objects.first().id]
+        cover = Sup(name='this_is_fine.png',
+                    content=open('media/images/this_is_fine.png',
+                                 'rb').read(),
+                    content_type='image/png')
+        form = NewAlbumForm({'title': 'Test',
+                             'description': 'TestDes',
+                             'published': 'PBLC',
+                             'photo': photo,
+                             'cover': cover})
+        self.assertTrue(form.is_valid())
