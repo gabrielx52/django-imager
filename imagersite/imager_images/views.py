@@ -1,7 +1,8 @@
 """Django profile app views."""
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.views.generic import CreateView, DetailView, TemplateView
+from django.views.generic import (CreateView, DetailView,
+                                  TemplateView, UpdateView)
 
 
 from imager_images.models import Album, Photo
@@ -66,3 +67,33 @@ class NewPhotoView(LoginRequiredMixin, CreateView):
         form_user = ImagerProfile.objects.get(user=self.request.user)
         form.instance.user = form_user
         return super(NewPhotoView, self).form_valid(form)
+
+
+class PhotoUpdate(LoginRequiredMixin, UpdateView):
+    """Class based view to display form for updating and editing photos."""
+
+    template_name = 'imager_images/photo_update.html'
+    model = Photo
+    fields = ['title', 'description', 'published', 'image']
+    success_url = '/images/library/'
+    redirect_field_name = '/login/'
+
+    def get_object(self, queryset=None):
+        """Populate form."""
+        obj = Photo.objects.get(pk=self.kwargs['pk'])
+        return obj
+
+
+class AlbumUpdate(LoginRequiredMixin, UpdateView):
+    """Class based view to display form for updating and editing photos."""
+
+    template_name = 'imager_images/album_update.html'
+    model = Album
+    fields = ['title', 'description', 'published', 'photo', 'cover']
+    success_url = '/images/library/'
+    redirect_field_name = '/login/'
+
+    def get_object(self, queryset=None):
+        """Populate form."""
+        obj = Album.objects.get(pk=self.kwargs['pk'])
+        return obj

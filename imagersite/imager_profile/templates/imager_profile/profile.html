@@ -2,7 +2,9 @@
 {% block content %}
 {% if request.user.is_authenticated %}
     <h2 id="profile_header">
-    <button type="button" class="btn btn-warning">Update</button>
+    <a href="{% url 'profile_update' %}">
+        <button type="button" class="btn btn-warning">Update</button>
+    </a>
     <a href="{% url 'library' %}"><button type="button" class="btn btn-success">Library</button></a>
     </h2>
     <ul id="bio_left" class="list-group">
