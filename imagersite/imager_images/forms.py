@@ -22,3 +22,23 @@ class NewPhotoForm(forms.ModelForm):
 
         model = Photo
         exclude = ['user', 'date_published', 'date_modified', 'date_uploaded']
+
+
+class UpdateAlbumForm(forms.ModelForm):
+    """New album form."""
+
+    class Meta:
+        """Meta."""
+
+        model = Album
+        exclude = ['user', 'date_uploaded', 'date_published', 'date_modified']
+
+
+class UpdatePhotoForm(forms.ModelForm):
+    """New photo form."""
+
+    class Meta:
+        """Meta."""
+
+        model = Photo
+        exclude = ['user', 'date_published', 'date_modified', 'date_uploaded']

@@ -12,27 +12,34 @@
         <div class="row text-center text-lg-left">
         {% for album in user.profile.album.all %}
             <div class="col-lg-3 col-md-4 col-xs-6">
+                <a href="{% url 'album_update' pk=album.pk %}">
+                    <button type="button" class="btn btn-info">Edit</button>
+                </a> {{ album.title }}
                 <a href="{% url 'album' pk=album.pk %}" class="d-block mb-4 h-100">
                     {% if album.cover.url != None %}
-                    <img class="img-fluid img-thumbnail" src="{{ album.cover.url }}" alt="">
+                        <img class="img-fluid img-thumbnail" src="{{ album.cover.url }}" alt="">
                     {% endif %}
                 </a>
             </div>
+
         {% endfor %}
         </div>
         {% endif %}
 
         {% if user.profile.photo.count != 0 %}
             <div><h3 class="my-4 text-center text-lg-left">Photos</h3></div>
-        <div class="row text-center text-lg-left">
-        {% for photo in user.profile.photo.all %}
-        <div class="col-lg-3 col-md-4 col-xs-6">
-            <a href="{% url 'photo' pk=photo.pk %}" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="{{ photo.image.url }}" alt="">
-            </a>
-        </div>
-        {% endfor %}
-        </div>
+            <div class="row text-center text-lg-left">
+            {% for photo in user.profile.photo.all %}
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <a href="{% url 'photo_update' pk=photo.pk %}">
+                        <button type="button" class="btn btn-danger">Edit</button>
+                    </a> {{ photo.title }}
+                    <a href="{% url 'photo' pk=photo.pk %}" class="d-block mb-4 h-100">
+                        <img class="img-fluid img-thumbnail" src="{{ photo.image.url }}" alt="">
+                    </a>
+                </div>
+            {% endfor %}
+            </div>
         {% endif %}
 
 </div>    
