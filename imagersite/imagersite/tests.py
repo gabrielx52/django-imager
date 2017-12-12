@@ -3,7 +3,8 @@ from bs4 import BeautifulSoup as Soup
 
 from django.contrib.auth.models import User
 from django.core import mail
-from django.test import Client, TestCase
+from django.test import Client
+from django.test import TestCase
 from django.urls import reverse_lazy
 
 

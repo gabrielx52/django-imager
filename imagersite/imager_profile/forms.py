@@ -1,9 +1,9 @@
 """Imager Images forms."""
 from django import forms
-
-from imager_profile.models import ImagerProfile, User
-
 from django.forms import inlineformset_factory
+
+from imager_profile.models import ImagerProfile
+from imager_profile.models import User
 
 
 class UpdateProfileForm(forms.ModelForm):

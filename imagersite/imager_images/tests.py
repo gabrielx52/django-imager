@@ -2,17 +2,21 @@
 import tempfile
 
 from django.conf import settings
-from django.core.files.uploadedfile import SimpleUploadedFile as Sup
-from django.test import Client, TestCase
 from django.core.files import File
+from django.core.files.uploadedfile import SimpleUploadedFile as Sup
+from django.test import Client
+from django.test import TestCase
 
 import factory
 
-from imager_images.models import Album, Photo
-from imager_images.forms import NewAlbumForm, NewPhotoForm
+from imager_images.forms import NewAlbumForm
+from imager_images.forms import NewPhotoForm
+from imager_images.models import Album
+from imager_images.models import Photo
 
 
-from imager_profile.models import ImagerProfile, User
+from imager_profile.models import ImagerProfile
+from imager_profile.models import User
 
 
 class PhotoFactory(factory.django.DjangoModelFactory):
