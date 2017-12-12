@@ -1,11 +1,13 @@
 """Test module for imager profile app."""
 
-from django.test import Client, TestCase
+from django.test import Client
+from django.test import TestCase
 from django.urls import reverse_lazy
 
 import factory
 
-from imager_profile.models import ImagerProfile, User
+from imager_profile.models import ImagerProfile
+from imager_profile.models import User
 
 
 class UserFactory(factory.django.DjangoModelFactory):
