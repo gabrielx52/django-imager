@@ -1,0 +1,35 @@
+{% extends "imagersite/base.html" %}
+{% block content %}
+{% if request.user.is_authenticated %}
+<div class="container">
+
+      <h3 class="inline my-4 text-center text-lg-left">{{ album.title }}</h3><h5 class="inline text-muted"> by <a class="card-link" href="{% url 'user_profile' username=album.user.user.username %}">{{ album.user.user.username }}</a></h5>
+      <br>
+      {% if album.description %}
+      <br>
+      <h4 class='text-muted'>{{ album.description }}</h4>
+      {% endif %}
+
+      <div class="row text-center text-lg-left">
+        
+        {% for photo in album.photo.all %}
+        <div class="col-lg-3 col-md-4 col-xs-6">
+          <a href="{% url 'photo' pk=photo.pk %}" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="{{ photo.image.url }}" alt="">
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+
+      </div>
+
+    </div>
+{% endif %}
+{% if not request.user.is_authenticated %}
+<h1>Norp</h1>
+{% endif %}
+    
+{% endblock content %}
+
+al = Album.objects.first()
+[print(x.title) for x in al.photo.all()]
