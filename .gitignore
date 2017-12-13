@@ -103,3 +103,8 @@ ENV/
 # Ignore media files
 imagersite/media/*
 !imagersite/media/.gitkeep
+
+# ansible
+imagersite/ansible/hosts
+imagersite/ansible/
+hosts
