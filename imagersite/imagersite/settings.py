@@ -155,11 +155,11 @@ if not DEBUG:
 
 
     STATICFILES_LOCATION = 'static'
-    STATICFILES_STORAGE = 'django_lender.custom_storages.StaticStorage'
+    STATICFILES_STORAGE = 'imagersite.custom_storages.StaticStorage'
     STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 
     MEDIAFILES_LOCATION = 'media'
-    DEFAULT_FILE_STORAGE = 'django_lender.custom_storages.MediaStorage'
+    DEFAULT_FILE_STORAGE = 'imagersite.custom_storages.MediaStorage'
     MEDIA_URL = 'htts://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
 else:
